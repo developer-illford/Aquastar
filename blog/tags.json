@@ -1,0 +1,22 @@
+{
+    "hashtags": {
+        "": {
+            "aqastar.html": {
+                "title": "aqastar",
+                "featuredImage": "https:\/\/aquastarqatar.com\/blog\/uploads\/port-de-barcelona-night.jpg",
+                "url": "https:\/\/aquastarqatar.com\/blog\/aqastar",
+                "category": "Blog",
+                "visibility": "public"
+            }
+        },
+        "aqastar": {
+            "aqastar.html": {
+                "title": "aqastar",
+                "featuredImage": "https:\/\/aquastarqatar.com\/blog\/uploads\/port-de-barcelona-night.jpg",
+                "url": "https:\/\/aquastarqatar.com\/blog\/aqastar",
+                "category": "Blog",
+                "visibility": "public"
+            }
+        }
+    }
+}

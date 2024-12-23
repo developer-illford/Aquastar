@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <style>
+        body {
+    background-color: #f0f0f1;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(168, 166, 166, 0.3);
+}
+
+.form-control {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: none;
+    border: 1px solid #464141;
+}
+
+.form-control:focus {
+    border: 1px solid #464141;
+    box-shadow: none;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: #000000;
+    border: none;
+    margin-top: 15%;
+    border-radius: 1rem;
+    padding: 3%;
+}
+
+.btn-primary:hover {
+    background-color: #000000;
+    border: none;
+}
+
+#forgotPasswordLink {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#forgotPasswordLink:hover {
+    text-decoration: underline;
+}
+    </style>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <form class="p-4 bg-white rounded shadow-sm" style="width: 100%; max-width: 400px;">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button type="button" class="btn btn-primary btn-block" id="loginBtn">Log In</button>
+            <div class="text-center mt-3">
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+<script>
+    window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+    window.history.go(1); // Prevent the back button from showing the previous page
+};
+
+</script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="assets/js/login.js"></script>
+
+</body>
+
+</html>

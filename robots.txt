@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: 
+Disallow: /blog/login
+Disallow: /blog/admin
+Disallow: /blog/blog-editor
+Disallow: /admin
+Disallow: /login

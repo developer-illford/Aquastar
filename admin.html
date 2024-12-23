@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="shortcut icon" type="image/jpg" href="favicon.png">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/Aquastar_Logo.webp" alt="Aqua Star Logo"></a>
+                <!-- Replace with your logo path -->
+            </div>
+            <div class="navbar_sec">
+                <div class="navbar_contact">
+                    <div class="contact-info">
+                        <div class="email">
+                            <img src="assets/img/email.webp" alt="">
+
+                            <a target="_blank"  href="mailto:sales@aquastarqatar.com"
+                                style="text-decoration: none; color: black;"><span>sales@aquastarqatar.com</span></a>
+                        </div>
+                        <div class="phone">
+                            <img src="assets/img/phone_call.webp" alt="">
+
+                            <a target="_blank" href="tel:+97444140011"
+                                style="text-decoration: none; color: black;"><span>+974 4414 0011</span></a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="nav-links">
+                    <ul>
+                        <li><a class="active" href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <button
+                            style="background-color: #0976db; color: #fff; border: none; padding: 9px ; border-radius: 12px;"
+                            onclick="logoutUser()"> Logout&nbsp; <i class="fa-solid fa-right-from-bracket"></i></button>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin_sec">
+        <div class="admin_input">
+            <form action="admin.php" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-xl-6 mb-2">
+                        <label for="">Product Name :</label>
+                        <input type="text" name="productname" placeholder="Product Name" id="productname" required>
+                    </div>
+                    <div class="col-xl-6 mb-2">
+                        <label for="">Model Number :</label>
+                        <input type="text" name="modelid" placeholder="Model ID" id="modelid" required>
+                    </div>
+                    <div class="col-xl-6 mb-2">
+                        <label for="">category :</label>
+                        <select name="category" id="category" required>
+                            <!-- Options will be dynamically added here -->
+                        </select>
+                        <input type="text" id="newCategoryInput" placeholder="Enter new category"
+                            style="display: none;">
+                        <button type="button" id="addCategoryBtn" style="display: none;">Add Category</button>
+                    </div>
+                    <div class="col-xl-6 mb-2">
+                        <label for="brand">Brand:</label>
+                        <input type="text" name="brand" id="brand" placeholder="Enter Brand" required>
+                    </div>
+
+                    <div class="col-xl-6 mb-2">
+                        <label for="">Product Image :</label>
+                        <input type="hidden" name="current_image" id="current_image">
+                        <input name="product_image" id="product_image" type="file">
+                        <div id="currentFileName" style="margin-top: 5px; font-size: 14px; color: gray;"></div>
+                    </div>
+
+                    <div class="col-xl-12 mb-2">
+                        <label for="">Product Description :</label>
+                        <textarea rows="5" name="product_details" placeholder="Product Details"
+                            id="product_details"></textarea>
+                    </div>
+                </div>
+                <button type="submit">Save &nbsp; <i class="fa-solid fa-floppy-disk"></i></button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="table_container">
+        <div class="table-options d-flex mb-3">
+            <input type="text" id="searchBox" placeholder="🔍  &nbsp; Search by Name or Model ID"
+                class="form-control me-2" style="width: 50%;">
+            <select id="categoryFilter" class="form-select" style="width: 25%;">
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+
+        <table id="productTable" class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Model ID</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Details</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+
+
+    <!-- footer -->
+    <!-- <div class="location">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.4998331948036!2d-74.0146213226904!3d40.70701197471505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a16fd78e487%3A0x987ca0c82b43323d!2s32%20Wall%20St%2C%20New%20York%2C%20NY%2010005%2C%20USA!5e0!3m2!1sen!2sin!4v1731499486929!5m2!1sen!2sin"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+
+    <div class="footer">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 footer_sec">
+                <div class="footer_sec_img">
+                    <img src="assets/img/Aquastar_footer_logo.webp" alt="">
+                </div>
+                <p>You can dream, create, design, and
+                    build the most wonderful place in the
+                    world.</p>
+                <div class="footer_social_icons">
+                    <div class="social_box">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <div class="social_box">
+                        <i class="fa-brands fa-twitter"></i>
+                    </div>
+                    <div class="social_box">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+                    <div class="social_box">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 footer_sec2">
+                <h6>Quick Links</h6>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="products.html">Products</a>
+                <a href="services.html">Services Details</a>
+                <a href="">Terms & Conditions</a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 footer_sec2">
+                <h6>Quick Links</h6>
+                <a href="">Construction</a>
+                <a href="">Equipments</a>
+                <a href="">maintenance</a>
+                <a href="">Design / Blueprint </a>
+                <a href="">Re-Construction</a>
+                <a href="">maintenance contracts</a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 footer_sec3">
+                <h6>Get in touch</h6>
+                <div class="footer_sec3_links">
+                    <div class="footer_sec3_links1">
+                        <p>A</p>
+                    </div>
+                    <p>32, Wales Street, <br>
+                        New York, USA</p>
+                </div>
+                <div class="footer_sec3_links">
+                    <div class="footer_sec3_links1">
+                        <p>P</p>
+                    </div>
+                    <p>(009)01361246725 <br>
+                        (009)01361246116</p>
+                </div>
+                <div class="footer_sec3_links">
+                    <div class="footer_sec3_links1">
+                        <p>E</p>
+                    </div>
+                    <p>hello@constik.com <br>
+                        info@constik.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                <p>© 2024 All Rights Reserved</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <p>Terms & Conditions</p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <p>Privacy & Policy</p>
+            </div>
+        </div>
+    </div> -->
+
+    <style>
+        .edit-btn {
+            padding: 5px 8px;
+            background-color: var(--theme-color);
+            color: var(--theme-color-w);
+            border-radius: 0.3rem;
+            text-decoration: none;
+            border: 2px solid var(--theme-color-w);
+        }
+
+        .delete-btn {
+            color: rgb(255, 0, 0);
+        }
+    </style>
+
+    <script type="text/javascript">
+        document.addEventListener('input', function (event) {
+            var LimitSpecialChara = document.getElementById("productname").value;
+            document.getElementById("productname").value = LimitSpecialChara.replace(/[\"]/g, "");
+        });
+    </script>
+
+    <script>
+
+
+        function logoutUser() {
+            console.log("Logout initiated");
+            if (confirm('Are you sure you want to logout?')) {
+                firebase.auth().signOut()
+                    .then(() => {
+                        localStorage.clear(); // You can use sessionStorage.clear() if you're using sessionStorage
+                        sessionStorage.clear();
+                        console.log("Logout successful");
+                        window.location.href = 'index.html';
+                    })
+                    .catch((error) => {
+                        console.error("Logout failed:", error);
+                    });
+            }
+        }
+
+
+
+
+
+        // ********************************************************************************************
+        // Function to logout user after 1 hour of inactivity since last user activity
+        // ********************************************************************************************
+
+        window.onload = function () {
+            console.log('loaded');
+            // Function to handle user logout
+            function logoutUser() {
+                console.log("Logging out user due to inactivity or tab/window close");
+                auth.signOut().then(() => {
+                    // Clear any user session data
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    // Redirect to login page after logout
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Function to set login time
+            function setLoginTime() {
+                var loginTime = new Date().getTime();
+                localStorage.setItem('loginTime', loginTime);
+                console.log("Login time set at: " + new Date(loginTime));
+            }
+
+            // Function to check inactivity based on login time
+            function checkInactivity() {
+                var loginTime = localStorage.getItem('loginTime');
+                if (loginTime) {
+                    var currentTime = new Date().getTime();
+                    var timeSinceLogin = currentTime - loginTime;
+
+                    if (timeSinceLogin > 10 * 1 * 1000) { // 1 hour
+                        logoutUser();
+                    } else {
+                        // Reset the inactivity timeout to check again after the remaining time
+                        var remainingTime = 10 * 1 * 1000 - timeSinceLogin;
+                        clearTimeout(inactivityTimeout);
+                        inactivityTimeout = setTimeout(logoutUser, remainingTime);
+                    }
+                }
+            }
+
+            // Set login time on load if not already set
+            if (!localStorage.getItem('loginTime')) {
+                setLoginTime();
+            }
+
+            // Check inactivity on page load/reload
+            checkInactivity();
+
+            // Event listeners for user activity to reset login time
+            document.addEventListener("mousemove", function () {
+                setLoginTime();
+                checkInactivity();
+            });
+
+            document.addEventListener("keypress", function () {
+                setLoginTime();
+                checkInactivity();
+            });
+
+            // Variable to store the inactivity timeout
+            var inactivityTimeout;
+
+            // Log out the user when closing the tab or browser
+            window.addEventListener("beforeunload", function () {
+                logoutUser();
+            });
+
+            window.addEventListener('unload', function () {
+                logoutUser();
+            });
+
+        };
+
+
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // In your login.html page (after successful authentication):
+            var auth = firebase.auth();
+            auth.onAuthStateChanged(function (user) {
+                if (!user) {
+                    // User is authenticated, allow access to admin.html
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+
+
+
+
+
+
+
+            fetch('products.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#productTable tbody');
+                    const form = document.querySelector('.admin_input form');
+                    const productNameInput = document.querySelector('#productname');
+                    const modelIdInput = document.querySelector('#modelid');
+                    const categoryInput = document.querySelector('#category');
+                    const brandInput = document.querySelector('#brand');
+                    const detailsInput = document.querySelector('#product_details');
+                    const imageInput = document.querySelector('#product_image');
+                    const currentImageInput = document.querySelector('#current_image');
+                    let currentProductName = null;
+
+                    // Populate the table
+                    tableBody.innerHTML = '';
+                    Object.entries(data).forEach(([productName, details]) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td>${productName}</td>
+                    <td>${details.model_id}</td>
+                    <td>${details.category}</td>
+                    <td>${details.details}</td>
+                    <td><img src="${details.image}" alt="Product Image" style="max-width: 50px;"></td>
+                    <td>
+                        <button class="edit-btn" data-product="${productName}">Edit</button>
+                        <a href="admin.php?delete=${productName}" class="delete-btn">Delete</a>
+                    </td>
+                `;
+                        tableBody.appendChild(row);
+                    });
+
+                    // Handle edit button click
+                    tableBody.addEventListener('click', (event) => {
+                        if (event.target.classList.contains('edit-btn')) {
+                            const productName = event.target.dataset.product;
+                            const product = data[productName];
+
+                            // Populate form fields
+                            productNameInput.value = productName;
+                            modelIdInput.value = product.model_id;
+                            categoryInput.value = product.category;
+                            detailsInput.value = product.details;
+                            imageInput.value = ''; // Clear the image input
+                            currentImageInput.value = product.image; // Set the current image path
+                            document.getElementById('brand').value = product.brand || '';
+
+                            // Display the current file name
+                            const currentFileName = document.getElementById('currentFileName');
+                            if (product.image) {
+                                const fileName = product.image.split('/').pop(); // Extract file name from path
+                                currentFileName.textContent = `Current file: ${fileName}`;
+                            } else {
+                                currentFileName.textContent = 'No file uploaded.';
+                            }
+
+                            currentProductName = productName; // Set the product being edited
+                            form.action = `admin.php?edit=${encodeURIComponent(productName)}`; // Update form action
+                        }
+                    });
+                });
+
+
+
+            const categoryDropdown = document.getElementById('category');
+            const newCategoryInput = document.getElementById('newCategoryInput');
+            const addCategoryBtn = document.getElementById('addCategoryBtn');
+
+            // Load categories from categories.json
+            fetch('categories.json')
+                .then(response => response.json())
+                .then(categories => {
+                    populateCategories(categories);
+                });
+
+            function populateCategories(categories) {
+                categoryDropdown.innerHTML = '';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categoryDropdown.appendChild(option);
+                });
+
+                // Add the "Add New Category" option
+                const addOption = document.createElement('option');
+                addOption.value = 'add_new';
+                addOption.textContent = 'Add New Category';
+                categoryDropdown.appendChild(addOption);
+            }
+
+            // Show input field for new category when "Add New Category" is selected
+            categoryDropdown.addEventListener('change', () => {
+                if (categoryDropdown.value === 'add_new') {
+                    newCategoryInput.style.display = 'block';
+                    addCategoryBtn.style.display = 'inline-block';
+                } else {
+                    newCategoryInput.style.display = 'none';
+                    addCategoryBtn.style.display = 'none';
+                }
+            });
+
+            // Handle new category addition
+            addCategoryBtn.addEventListener('click', () => {
+                const newCategory = newCategoryInput.value.trim();
+                if (newCategory) {
+                    fetch('admin.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'add_category', newCategory })
+                    })
+                        .then(response => response.json())
+                        .then(categories => {
+                            populateCategories(categories); // Reload the dropdown with updated categories
+                            newCategoryInput.value = '';
+                            newCategoryInput.style.display = 'none';
+                            addCategoryBtn.style.display = 'none';
+                        });
+                }
+            });
+
+
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.querySelector('#productTable tbody');
+            const searchBox = document.getElementById('searchBox');
+            const categoryFilter = document.getElementById('categoryFilter');
+
+            // Fetch categories for the dropdown
+            fetch('categories.json')
+                .then(response => response.json())
+                .then(categories => {
+                    populateCategoryFilter(categories);
+                });
+
+            function populateCategoryFilter(categories) {
+                categoryFilter.innerHTML = '<option value="">All Categories</option>'; // Default option
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categoryFilter.appendChild(option);
+                });
+            }
+
+            // Fetch products and populate the table
+            fetch('products.json')
+                .then(response => response.json())
+                .then(data => {
+                    renderTable(data);
+
+                    // Add event listeners for search and category filtering
+                    searchBox.addEventListener('input', () => filterTable(data));
+                    categoryFilter.addEventListener('change', () => filterTable(data));
+                });
+
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                Object.entries(data).forEach(([productName, details]) => {
+                    const row = document.createElement('tr');
+                    row.dataset.category = details.category; // Add category as a data attribute for filtering
+                    row.innerHTML = `
+                <td>${productName}</td>
+                <td>${details.model_id}</td>
+                <td>${details.category}</td>
+                 <td>${details.brand}</td>
+                <td>${details.details}</td>
+                <td><img src="${details.image}" alt="Product Image" style="max-width: 50px;"></td>
+                <td>
+                    <button class="edit-btn" data-product="${productName}">Edit</button>
+                    <a href="admin.php?delete=${productName}" class="delete-btn">Delete</a>
+                </td>
+            `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function filterTable(data) {
+                const searchQuery = searchBox.value.toLowerCase();
+                const selectedCategory = categoryFilter.value;
+
+                const filteredData = Object.entries(data).filter(([productName, details]) => {
+                    const matchesSearch =
+                        productName.toLowerCase().includes(searchQuery) ||
+                        details.model_id.toLowerCase().includes(searchQuery);
+
+                    const matchesCategory =
+                        !selectedCategory || details.category === selectedCategory;
+
+                    return matchesSearch && matchesCategory;
+                });
+
+                // Render the filtered table
+                const filteredObject = Object.fromEntries(filteredData); // Convert back to object format
+                renderTable(filteredObject);
+            }
+        });
+
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Import the Firebase core (always required) -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <!-- Import only the Firebase database module -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="assets/js/fireconfig.js"></script>
+    <script src="assets/js/navbar.js" defer></script>
+    <!-- <script src="assets/js/credentials.js"></script> -->
+</body>
+
+</html>
